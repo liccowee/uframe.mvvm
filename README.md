@@ -1,6 +1,5 @@
 # uframe.mvvm
 uFrame MVVM is MVVM Framework implemented by uFrame visual coding engine.
-Keep maintenance of uFrame.MVVM Unity framework. Fix as many bug as possible and add features.
 
 ## What's the purposes?
 1. Save the importing process hassle by avoiding to download `PackageManager` and `csharp60` for setting up uFrame.
