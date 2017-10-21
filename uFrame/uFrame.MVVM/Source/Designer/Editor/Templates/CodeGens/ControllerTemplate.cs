@@ -158,11 +158,11 @@ namespace uFrame.MVVM.Templates
             Ctx._("{0}ViewModelManager.Remove(viewModel)", Ctx.Data.Name);
         }
 
-        [ForEach("CommandsWithoutArgs"), GenerateMethod, InsideAll, WithNameFormat("{0}")]
+        [ForEach("CommandsWithoutArgs"), GenerateMethod(CallBase = false), InsideAll, WithNameFormat("{0}")]
         public virtual void _Name_CommandsWithoutArgs(ViewModel viewModel)
         {
             Ctx.CurrentMethod.Parameters[0].Type = new CodeTypeReference(Ctx.Item.Node.Name + "ViewModel");
-
+            if(!Ctx.IsDesignerFile) Ctx._("base.{0}(viewModel)", Ctx.Item.Name);
         }
 
         [ForEach("LocalCommands"), GenerateMethod, WithNameFormat("{0}Handler")]
@@ -199,11 +199,13 @@ namespace uFrame.MVVM.Templates
             }
         }
 
-        [ForEach("CommandsWithArgs"), GenerateMethod, WithNameFormat("{0}"), InsideAll]
+        [ForEach("CommandsWithArgs"), GenerateMethod(CallBase = false), WithNameFormat("{0}"), InsideAll]
         public virtual void _Name_CommandsWithArgs(ViewModel viewModel, object arg)
         {
-            _Name_CommandsWithoutArgs(viewModel);
+            //_Name_CommandsWithoutArgs(viewModel);
+            Ctx.CurrentMethod.Parameters[0].Type = new CodeTypeReference(Ctx.Item.Node.Name + "ViewModel");
             Ctx.CurrentMethod.Parameters[1].Type = new CodeTypeReference(Ctx.TypedItem.RelatedTypeName);
+            if(!Ctx.IsDesignerFile) Ctx._("base.{0}(viewModel, arg)", Ctx.Item.Name);
         }
     }
 }
